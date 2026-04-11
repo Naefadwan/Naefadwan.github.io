@@ -1,77 +1,30 @@
-# Your Name — AI/ML Engineer
+# Naef — AI/ML Engineer
 
-> Replace this README with your own after setting up your site. This file is not displayed on your portfolio site — it is what visitors see when they visit your GitHub repo directly. A strong README here reinforces the professional impression your portfolio site creates.
+Welcome to my personal portfolio site built with GitHub Pages.
 
----
+## Live Portfolio
+- Site: https://naefadwan.github.io/
 
-## Setup Instructions
+## About this project
+This repository hosts a lightweight portfolio website that showcases my work in AI, machine learning, data engineering, and software development.
 
-*Delete everything above and below the setup instructions once you have completed them.*
+The site includes:
+- A polished personal landing page in `index.md`
+- Project-specific content in `projects/`
+- A simple custom layout in `_layouts/default.html`
+- Configuration and site metadata in `_config.yml`
 
-### 1. Create your repo from this template
+## What you can find here
+- AI/ML projects demonstrating applied modeling, data pipelines, and NLP
+- Design summaries and deployment notes for portfolio work
+- Links to my GitHub projects and contact information
 
-Click **"Use this template"** (green button, top right) then **"Create a new repository"**.
+## Development
+To preview locally:
+1. Edit site content in `index.md` and `projects/`
+2. Update metadata in `_config.yml`
+3. Commit changes and push to GitHub
 
-Name your repo one of:
-- `your-github-username.github.io` — enables GitHub Pages automatically
-- `portfolio` — you will enable Pages manually in step 2
+GitHub Pages automatically publishes the site from this repository.
 
-Set visibility to **Public** (required for GitHub Pages free tier).
 
-### 2. Enable GitHub Pages
-
-If you used the `.github.io` naming, skip this step — Pages is already enabled.
-
-Otherwise: go to **Settings → Pages → Source → Deploy from a branch → main → / (root) → Save**.
-
-Wait 1-2 minutes, then visit your site.
-
-### 3. Customize your site
-
-1. **Edit `_config.yml`** — change `title` to your name and `description` to your tagline
-2. **Edit `index.md`** — replace the placeholder content with your own
-3. **Commit and push** — your site updates automatically in 1-2 minutes
-
-### 4. Replace the LICENSE
-
-This template ships with a LevelUp Economy educational license. Once you create your own repo from this template, **replace the LICENSE file** with a license that fits your portfolio:
-
-- **[MIT License](https://choosealicense.com/licenses/mit/)** — lets anyone use your code with attribution. Good default for open-source portfolio projects.
-- **[CC BY 4.0](https://choosealicense.com/licenses/cc-by-4.0/)** — suited for written content and creative work. Requires attribution.
-- **No license** — if you prefer to retain all rights, you can delete the LICENSE file entirely. Others can view your code on GitHub but have no explicit permission to reuse it.
-
-Choose what makes sense for your work. Visit [choosealicense.com](https://choosealicense.com/) if you are unsure.
-
-### 5. Replace this README
-
-Delete everything in this file and write your own. A good portfolio README includes:
-
-- **Your name and a one-line description** of who you are
-- **A link to your live portfolio site**
-- **A brief summary** of what the portfolio contains (e.g., "12 applied AI/ML projects spanning data pipelines, NLP, RAG systems, and deployed APIs")
-- **How to reach you** — GitHub profile, LinkedIn, email
-
-This is what hiring managers and collaborators see when they land on your repo. Make it count.
-
----
-
-## File Structure
-
-```
-your-portfolio/
-├── _config.yml                  ← Site title, description, and theme
-├── _layouts/
-│   └── default.html             ← Page layout (customized from Cayman theme)
-├── index.md                     ← Your portfolio content — edit this
-├── projects/
-│   └── sample-project.md        ← Template for project detail pages (optional)
-├── .gitignore                   ← Keeps build artifacts out of your repo
-├── LICENSE                      ← Replace with your chosen license
-└── README.md                    ← This file — replace with your own
-```
-
----
-
-## License
-
-This template is provided for educational use by [LevelUp Economy](https://levelupeconomy.com). See [LICENSE](LICENSE) for terms. Once you create your own repo from this template, replace the LICENSE with your chosen license (see step 4 above).
