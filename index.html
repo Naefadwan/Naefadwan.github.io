@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nayef Aladwan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+            geist: ['Geist', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #050505;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 8px rgba(34,197,94,0.4); }
+      50% { box-shadow: 0 0 16px rgba(34,197,94,0.7); }
+    }
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .animate-fade-up {
+      opacity: 0;
+      animation: fadeUp 0.8s ease-out forwards;
+    }
+    .animate-fade-in {
+      opacity: 0;
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+
+    .glass-panel {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .project-card {
+      background: #0a0a0a;
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(239,68,68,0), transparent);
+      transition: all 0.4s ease;
+    }
+    .project-card:hover {
+      border-color: rgba(255,255,255,0.12);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+    }
+    .project-card:hover::before {
+      background: linear-gradient(90deg, transparent, rgba(239,68,68,0.5), transparent);
+    }
+    .project-card.in-progress {
+      border-style: dashed;
+      border-color: rgba(255,255,255,0.08);
+    }
+    .project-card.in-progress:hover {
+      border-color: rgba(255,255,255,0.12);
+      transform: none;
+      box-shadow: none;
+    }
+    .project-card.in-progress::before { display: none; }
+
+    .skill-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      background: rgba(239,68,68,0.08);
+      color: #f87171;
+      border: 1px solid rgba(239,68,68,0.15);
+      transition: all 0.3s ease;
+    }
+    .skill-tag:hover {
+      background: rgba(239,68,68,0.15);
+      border-color: rgba(239,68,68,0.3);
+    }
+
+    .section-label {
+      font-family: 'Geist', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #ef4444;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: #ef4444;
+    }
+
+    .category-header {
+      font-family: 'Geist', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #ffffff;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .category-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ef4444;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .ext-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #737373;
+      font-size: 12px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+    }
+    .ext-link:hover {
+      color: #ef4444;
+      border-color: rgba(239,68,68,0.2);
+      background: rgba(239,68,68,0.05);
+    }
+    .ext-link .iconify { transition: transform 0.3s ease; }
+    .ext-link:hover .iconify { transform: translate(2px, -2px); }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      border-radius: 12px;
+      background: #0a0a0a;
+      border: 1px solid rgba(255,255,255,0.05);
+      text-decoration: none;
+      color: #ffffff;
+      transition: all 0.4s ease;
+    }
+    .contact-link:hover {
+      border-color: rgba(239,68,68,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px -10px rgba(127,29,29,0.2);
+    }
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ef4444;
+      font-size: 20px;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+    .contact-link:hover .contact-icon {
+      background: rgba(239,68,68,0.2);
+      border-color: rgba(239,68,68,0.4);
+    }
+
+    .nav-link {
+      color: #737373;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+    .nav-link:hover { color: #ffffff; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #ef4444;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    .tech-item {
+      padding: 20px;
+      border-radius: 12px;
+      background: #0a0a0a;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+    }
+    .tech-item:hover {
+      border-color: rgba(255,255,255,0.1);
+      background: #111111;
+    }
+
+    .blob {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(127,29,29,0.15), transparent 70%);
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .grid-pattern {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: -1;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 40%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 40%, transparent 100%);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff 0%, #ef4444 50%, #ffffff 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-shift 6s ease infinite;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34,197,94,0.5);
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    .section-sep {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+      margin: 80px 0;
+    }
+  </style>
+</head>
+<body class="font-inter antialiased">
+
+  <!-- Background -->
+  <div class="grid-pattern"></div>
+  <div class="blob" style="top:-200px;right:-200px;"></div>
+  <div class="blob" style="bottom:-300px;left:-200px;opacity:0.5;"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
+    <div class="glass-panel rounded-full px-8 py-3 flex items-center gap-8" style="box-shadow:0 20px 50px -12px rgba(0,0,0,0.5);">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#stack" class="nav-link">Stack</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-6 pt-32 pb-24">
+
+    <!-- ===== HERO ===== -->
+    <section id="about" class="mb-32">
+      <div class="animate-fade-up">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="status-dot"></div>
+          <span class="text-xs font-medium text-neutral-500 tracking-wide uppercase" style="font-family:'Geist',sans-serif;">Available for opportunities</span>
+        </div>
+      </div>
+
+      <h1 class="animate-fade-up delay-100" style="font-family:'Geist',sans-serif;font-size:clamp(48px,8vw,72px);font-weight:300;line-height:1.05;letter-spacing:-0.03em;">
+        Nayef<br>
+        <span class="gradient-text font-semibold">Aladwan</span>
+      </h1>
+
+      <p class="animate-fade-up delay-200 mt-8 text-neutral-400 text-lg leading-relaxed max-w-2xl">
+        Computer Science graduate from <span class="text-white font-medium">WISE University</span>, Jordan. Building production-grade AI systems through the <span class="text-white font-medium">AI.SPIRE</span> program — focused on <span class="text-red-400">NLP</span>, <span class="text-red-400">retrieval systems</span>, and turning prototypes into deployable pipelines.
+      </p>
+
+      <p class="animate-fade-up delay-300 mt-4 text-neutral-500 text-base leading-relaxed max-w-2xl">
+        I thrive on the full lifecycle: from wrangling messy data and training models, through containerized APIs, to monitoring systems in production. AI tools are only valuable when they run reliably outside a notebook.
+      </p>
+
+      <div class="animate-fade-up delay-400 mt-10 flex flex-wrap items-center gap-4">
+        <a href="#contact" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-black text-sm font-medium rounded-full hover:bg-neutral-200 transition-all duration-300" style="box-shadow:0 0 30px rgba(255,255,255,0.1);">
+          Get in touch
+          <span class="iconify" data-icon="lucide:arrow-down-right" data-width="14"></span>
+        </a>
+        <a href="#projects" class="inline-flex items-center gap-2 px-6 py-3 text-neutral-400 text-sm font-medium rounded-full border border-white/10 hover:border-white/20 hover:text-white transition-all duration-300">
+          View projects
+        </a>
+      </div>
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== TECH STACK ===== -->
+    <section id="stack" class="mb-32 reveal">
+      <div class="section-label mb-8">Technical Stack</div>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <div class="tech-item">
+          <div class="text-neutral-600 text-[10px] font-semibold tracking-widest uppercase mb-3" style="font-family:'Geist',sans-serif;">ML & Deep Learning</div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">scikit-learn</span>
+            <span class="skill-tag">Hugging Face</span>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="text-neutral-600 text-[10px] font-semibold tracking-widest uppercase mb-3" style="font-family:'Geist',sans-serif;">NLP</div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="skill-tag">spaCy</span>
+            <span class="skill-tag">DistilBERT</span>
+            <span class="skill-tag">NER</span>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="text-neutral-600 text-[10px] font-semibold tracking-widest uppercase mb-3" style="font-family:'Geist',sans-serif;">Data & Databases</div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="skill-tag">pandas</span>
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">SPARQL</span>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="text-neutral-600 text-[10px] font-semibold tracking-widest uppercase mb-3" style="font-family:'Geist',sans-serif;">Retrieval & RAG</div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="skill-tag">Weaviate</span>
+            <span class="skill-tag">Vector Search</span>
+            <span class="skill-tag">Embeddings</span>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="text-neutral-600 text-[10px] font-semibold tracking-widest uppercase mb-3" style="font-family:'Geist',sans-serif;">Deployment</div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="skill-tag">FastAPI</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">REST APIs</span>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="text-neutral-600 text-[10px] font-semibold tracking-widest uppercase mb-3" style="font-family:'Geist',sans-serif;">Infrastructure</div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">Monitoring</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects" class="mb-32">
+
+      <!-- Foundations -->
+      <div class="reveal">
+        <div class="section-label mb-6">01 — Foundations</div>
+        <div class="category-header">
+          <div class="category-icon">
+            <span class="iconify" data-icon="lucide:layers" data-width="16"></span>
+          </div>
+          Git, Data Pipelines & Visualization
+        </div>
+        <div class="grid gap-4 mb-16">
+
+          <div class="project-card">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <h3 class="text-white font-medium text-[15px] leading-snug">Reproducible Development Environment</h3>
+              <a href="https://github.com/LevelUp-Applied-AI/m1-l1-git-workflows-Naefadwan" target="_blank" class="ext-link flex-shrink-0">Repo <span class="iconify" data-icon="lucide:arrow-up-right" data-width="12"></span></a>
+            </div>
+            <p class="text-neutral-500 text-sm leading-relaxed mb-4">Configured a standardized Python workspace with virtual environments, linting, and Git workflows to ensure consistent results across team members.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">VS Code</span>
+              <span class="skill-tag">Virtual Environments</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <h3 class="text-white font-medium text-[15px] leading-snug">Team Collaboration Pipeline</h3>
+              <a href="https://github.com/LevelUp-Applied-AI/m1-l1-git-workflows-Naefadwan" target="_blank" class="ext-link flex-shrink-0">Repo <span class="iconify" data-icon="lucide:arrow-up-right" data-width="12"></span></a>
+            </div>
+            <p class="text-neutral-500 text-sm leading-relaxed mb-4">Contributed to a shared codebase using feature-branch workflows, conducting code reviews and resolving merge conflicts to maintain a clean history.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="skill-tag">Pull Requests</span>
+              <span class="skill-tag">Code Review</span>
+              <span class="skill-tag">Merge Conflicts</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <h3 class="text-white font-medium text-[15px] leading-snug">ETL Data Pipeline</h3>
+              <a href="https://github.com/LevelUp-Applied-AI/m2-d2-pipeline-basics-Naefadwan" target="_blank" class="ext-link flex-shrink-0">Repo <span class="iconify" data-icon="lucide:arrow-up-right" data-width="12"></span></a>
+            </div>
+            <p class="text-neutral-500 text-sm leading-relaxed mb-4">Built an end-to-end data loading and preprocessing pipeline with validation checks at each stage, producing clean, reproducible outputs for downstream modeling.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">pandas</span>
+              <span class="skill-tag">Pipeline Design</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <h3 class="text-white font-medium text-[15px] leading-snug">Neural Network Training Loop</h3>
+              <a href="https://github.com/LevelUp-Applied-AI/m2-i2-pytorch-Naefadwan" target="_blank" class="ext-link flex-shrink-0">Repo <span class="iconify" data-icon="lucide:arrow-up-right" data-width="12"></span></a>
+            </div>
+            <p class="text-neutral-500 text-sm leading-relaxed mb-4">Implemented a complete train-evaluate cycle in PyTorch — from data loaders and tensor operations through forward/backward passes to metric reporting.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="skill-tag">PyTorch</span>
+              <span class="skill-tag">Tensors</span>
+              <span class="skill-tag">Training Loops</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <h3 class="text-white font-medium text-[15px] leading-snug">SQL Analytics for Levant Tech</h3>
+              <a href="https://github.com/LevelUp-Applied-AI/m3-l3-sql-analytics-Naefadwan" target="_blank" class="ext-link flex-shrink-0">Repo <span class="iconify" data-icon="lucide:arrow-up-right" data-width="12"></span></a>
+            </div>
+            <p class="text-neutral-500 text-sm leading-relaxed mb-4">Designed an analytical query pack and KPI brief against a multi-table PostgreSQL database, translating business questions into performant SQL.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="skill-tag">SQL</span>
+              <span class="skill-tag">PostgreSQL</span>
+              <span class="skill-tag">Data Modeling</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <h3 class="text-white font-medium text-[15px] leading-snug">Amman Digital Market KPI Dashboard</h3>
+              <a href="https://github.com/LevelUp-Applied-AI/m4-i4-kpi-dashboard-Naefadwan" target="_blank" class="ext-link flex-shrink-0">Repo <span class="iconify" data-icon="lucide:arrow-up-right" data-width="12"></span></a>
+            </div>
+            <p class="text-neutral-500 text-sm leading-relaxed mb-4">Produced a descriptive analytics report — extracted data from PostgreSQL, defined and statistically validated KPIs, created publication-quality visualizations, and wrote an executive summary.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="skill-tag">Matplotlib</span>
+              <span class="skill-tag">Statistical Testing</span>
+              <span class="skill-tag">Data Storytelling</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ML & NLP -->
+      <div class="reveal">
+        <div class="section-label mb-6">02 — Machine Learning & NLP</div>
+        <div class="category-header">
+          <div class="category-icon">
+            <span class="iconify" data-icon="lucide:brain-circuit" data-width="16"></span>
+          </div>
+          ML Fundamentals, NER & Semantic Search
+        </div>
+        <div class="grid gap-4 mb-16">
+
+          <div class="project-card">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <h3 class="text-white font-medium text-[15px] leading-snug">Customer Churn Prediction</h3>
+              <a href="https://github.com/LevelUp-Applied-AI/m5-l5a-regression-eval-Naefadwan" target="_blank" class="ext-link flex-shrink-0">Repo <span class="iconify" data-icon="lucide:arrow-up-right" data-width="12"></span></a>
+            </div>
+            <p class="text-neutral-500 text-sm leading-relaxed mb-4">Built a complete train-evaluate loop in scikit-learn using the Petra Telecom churn dataset, comparing models and interpreting evaluation metrics to inform retention strategies.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="skill-tag">scikit-learn</span>
+              <span class="skill-tag">Classification</span>
+              <span class="skill-tag">Cross-Validation</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <h3 class="text-white font-medium text-[15px] leading-snug">Climate Article NER Pipeline</h3>
+              <a href="https://github.com/LevelUp-Applied-AI/m6-l6a-ner-pipeline-Naefadwan" target="_blank" class="ext-link flex-shrink-0">Repo <span class="iconify" data-icon="lucide:arrow-up-right" data-width="12"></span></a>
+            </div>
+            <p class="text-neutral-500 text-sm leading-relaxed mb-4">Built a Named Entity Recognition pipeline on real climate journalism articles, preprocessing raw text and extracting structured entities using spaCy.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="skill-tag">spaCy</span>
+              <span class="skill-tag">Text Preprocessing</span>
+              <span class="skill-tag">Entity Extraction</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <h3 class="text-white font-medium text-[15px] leading-snug">Semantic Search with Entity Enrichment</h3>
+              <a href="https://github.com/LevelUp-Applied-AI/m6-i6b-semantic-pipeline-Naefadwan" target="_blank" class="ext-link flex-shrink-0">Repo <span class="iconify" data-icon="lucide:arrow-up-right" data-width="12"></span></a>
+            </div>
+            <p class="text-neutral-500 text-sm leading-relaxed mb-4">Built a pipeline that accepts natural language queries, retrieves semantically similar documents using DistilBERT embeddings, and enriches results with named entities.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="skill-tag">PyTorch</span>
+              <span class="skill-tag">Hugging Face</span>
+              <span class="skill-tag">Sentence Embeddings</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Retrieval & Knowledge Graphs -->
+      <div class="reveal">
+        <div class="section-label mb-6">03 — Retrieval & Knowledge Graphs</div>
+        <div class="category-header">
+          <div class="category-icon">
+            <span class="iconify" data-icon="lucide:share-2" data-width="16"></span>
+          </div>
+          RAG, Vector Search & Ontologies
+        </div>
+        <div class="grid gap-4 mb-16">
+
+          <div class="project-card">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <h3 class="text-white font-medium text-[15px] leading-snug">Vector Retrieval Layer for RAG</h3>
+              <a href="https://github.com/Naefadwan/m8-l8" target="_blank" class="ext-link flex-shrink-0">Repo <span class="iconify" data-icon="lucide:arrow-up-right" data-width="12"></span></a>
+            </div>
+            <p class="text-neutral-500 text-sm leading-relaxed mb-4">Implemented the retrieval backbone of a RAG system on a technical Q&A corpus — ingesting documents, generating embeddings, and performing similarity search via Weaviate.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="skill-tag">Weaviate</span>
+              <span class="skill-tag">Vector Databases</span>
+              <span class="skill-tag">RAG Pipelines</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <h3 class="text-white font-medium text-[15px] leading-snug">Domain Knowledge Graph Construction</h3>
+              <a href="https://github.com/Naefadwan/m9-l9a" target="_blank" class="ext-link flex-shrink-0">Repo <span class="iconify" data-icon="lucide:arrow-up-right" data-width="12"></span></a>
+            </div>
+            <p class="text-neutral-500 text-sm leading-relaxed mb-4">Modeled a domain as a formal ontology, serialized it in Turtle format, and served it through Apache Jena Fuseki via Docker for SPARQL-based querying.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="skill-tag">RDF/Turtle</span>
+              <span class="skill-tag">SPARQL</span>
+              <span class="skill-tag">Docker</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Deployment -->
+      <div class="reveal">
+        <div class="section-label mb-6">04 — Deployment</div>
+        <div class="category-header">
+          <div class="category-icon">
+            <span class="iconify" data-icon="lucide:rocket" data-width="16"></span>
+          </div>
+          APIs, Containers & Production
+        </div>
+        <div class="grid gap-4 mb-16">
+
+          <div class="project-card">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <h3 class="text-white font-medium text-[15px] leading-snug">Unified AI Microservice</h3>
+              <a href="https://github.com/Naefadwan/m10-l10" target="_blank" class="ext-link flex-shrink-0">Repo <span class="iconify" data-icon="lucide:arrow-up-right" data-width="12"></span></a>
+            </div>
+            <p class="text-neutral-500 text-sm leading-relaxed mb-4">Built a containerized FastAPI backend exposing three typed REST endpoints that integrate NLP entity extraction, knowledge graph queries, and RAG retrieval into a single service.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="skill-tag">FastAPI</span>
+              <span class="skill-tag">Docker</span>
+              <span class="skill-tag">REST API Design</span>
+            </div>
+          </div>
+
+          <div class="project-card in-progress">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="iconify text-neutral-600" data-icon="lucide:clock" data-width="14"></span>
+              <h3 class="text-neutral-500 font-medium text-[15px]">Production Monitoring Setup</h3>
+            </div>
+            <p class="text-neutral-600 text-sm leading-relaxed">In progress — logging, health checks, and performance monitoring for the AI microservice.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Capstone -->
+      <div class="reveal">
+        <div class="section-label mb-6">05 — Capstone</div>
+        <div class="project-card in-progress">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="iconify text-neutral-600" data-icon="lucide:clock" data-width="14"></span>
+            <h3 class="text-neutral-500 font-medium text-[15px]">Capstone Project</h3>
+          </div>
+          <p class="text-neutral-600 text-sm leading-relaxed">In progress — end-to-end AI system demonstrating the full stack from data ingestion to production API.</p>
+        </div>
+      </div>
+
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="reveal">
+      <div class="section-label mb-8">Contact</div>
+      <div class="grid gap-3 max-w-xl">
+
+        <a href="https://github.com/Naefadwan" target="_blank" class="contact-link">
+          <div class="contact-icon">
+            <span class="iconify" data-icon="lucide:github" data-width="20"></span>
+          </div>
+          <div>
+            <div class="text-white text-sm font-medium">GitHub</div>
+            <div class="text-neutral-500 text-xs">github.com/Naefadwan</div>
+          </div>
+          <span class="iconify text-neutral-600 ml-auto" data-icon="lucide:arrow-up-right" data-width="16"></span>
+        </a>
+
+        <a href="https://www.linkedin.com/in/naef-aladwan-98aaa1252/" target="_blank" class="contact-link">
+          <div class="contact-icon">
+            <span class="iconify" data-icon="lucide:linkedin" data-width="20"></span>
+          </div>
+          <div>
+            <div class="text-white text-sm font-medium">LinkedIn</div>
+            <div class="text-neutral-500 text-xs">Nayef Aladwan</div>
+          </div>
+          <span class="iconify text-neutral-600 ml-auto" data-icon="lucide:arrow-up-right" data-width="16"></span>
+        </a>
+
+        <a href="mailto:Naef21@proton.me" class="contact-link">
+          <div class="contact-icon">
+            <span class="iconify" data-icon="lucide:mail" data-width="20"></span>
+          </div>
+          <div>
+            <div class="text-white text-sm font-medium">Email</div>
+            <div class="text-neutral-500 text-xs">Naef21@proton.me</div>
+          </div>
+          <span class="iconify text-neutral-600 ml-auto" data-icon="lucide:arrow-up-right" data-width="16"></span>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 py-8">
+    <div class="max-w-4xl mx-auto px-6 flex items-center justify-between">
+      <p class="text-neutral-600 text-xs">© 2025 Nayef Aladwan</p>
+      <p class="text-neutral-600 text-xs">Built with precision</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const revealElements = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealElements.forEach(el => observer.observe(el));
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+</body>
+</html>
